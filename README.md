@@ -1,8 +1,12 @@
 # Sätta upp en server i kursen TDDD82 (grupprojektet)
 
-En "enkel" guide för hur man sätter upp en Linux-server för kandidatprojektet i kursen TDDD82. Denna kurs går under vårterminen för civilingenjörer inom IT på LiUs universitet.
+En "enkel" guide för hur man sätter upp en Linux-server för gruppprojektet i kursen TDDD82. Denna kurs går under vårterminen för trejde årets studenter för civilingenjörsutbildningen inom IT på LiUs universitet.
 
-Servrarna givna av IDA (2018) kör operativsystemet [Debian 8](https://en.wikipedia.org/wiki/Debian).
+Servrarna givna av IDA (2018) kör operativsystemet [Debian 8](https://en.wikipedia.org/wiki/Debian). 
+Specs: 
+* Processor: Intel Xeon  E5-2620, 2.00 GHz 
+* 1GB RAM
+* 20GB SSD
 
 Kontakta handledare om `sudo` inte är installerat (har hänt).
 
@@ -26,7 +30,7 @@ Logga in på servern med:
 ssh liuid@itkand-X-X.tddd82-20XX.ida.liu.se
 ```
 
-Vid först inlogg kan det verka som terminalen är trasig (e.g. piltangener fungerar inte), detta är för att IDA skapar sina använda på ett väldigt primitivt (läs retarded) sätt. "Det är en väldigt barskrapad config, men det gör också att ni kan anpassa per grupp". Fixa detta problem genom att ändra din login shell med
+Vid först inlogg kan det verka som terminalen är trasig (e.g. piltangener fungerar inte), detta är för att IDA skapar sina användare på ett väldigt primitivt (läs retarded) sätt. "Det är en väldigt barskrapad config, men det gör också att ni kan anpassa per grupp". Fixa detta problem genom att ändra din login shell med
 ```bash
 chsh -s /bin/bash
 ```
@@ -51,16 +55,16 @@ sudo service nginx reload
 ```
 Debugging:
 ```bash
-# Testa config-filer
+# Testa config-filerna
 sudo nginx -t
-# Kolla requests log
+# Kolla requests loggen
 sudo cat /var/log/nginx/access.log
-# Kolla error log
+# Kolla error loggen
 sudo cat /var/log/nginx/error.log
 ```
 
 ## Köra program - uWSGI
-[uWSGI](https://en.wikipedia.org/wiki/UWSGI) användas för att kommunicera mellan en webbapplikation och en webbserver. Till exempel för att få en python app att korrekt hantera requests och skicka tillbaka data till klienter. Från början användes det bara för python-applikationer men har på senare tid börjat stödja andra språk (e.g. php, ruby, perl, Golang).
+[uWSGI](https://en.wikipedia.org/wiki/UWSGI) användas för att kommunicera mellan en webbapplikation och en webbserver. Till exempel för att få en python app att kunna hantera requests och skicka tillbaka data till klienten. Från början användes det bara för python-applikationer men har på senare tid börjat stödja andra språk (e.g. php, ruby, perl, Golang).
 
 Kan vara lite svårt att sätta upp ibland beroende på språk och ramverk. Flask och Django för python brukar oftast fungera på första försöket.
 
@@ -103,9 +107,10 @@ sudo chown -R www-data:www-data /srv/tddd82
 cd ~
 git clone https://github.com/JubbeArt/tddd82-server-setup .
 
-# Här kanske ni vill ändra i uwsgi-config filen
+# Här vill ni ändra i uwsgi-config filen efter behov
 # Exempelfilen är designad för att fungera för python-appar skrivet med Flask 
-# (och som har namnet app.py och 'app' som huvud-python-object) 
+# som använder en virtuel python-miljö. Huvudfilen i exemplet har namnet app.py
+# och 'app' som huvud-python-object 
 sudo cp uwsgi-flask.ini /etc/uwsgi-emperor/vassals
 
 # Stoppa default programmet som kör uwsgi (den suger)
