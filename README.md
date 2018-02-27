@@ -1,8 +1,24 @@
 # Sätta upp en server i kursen TDDD82 (grupprojektet)
 
+En "enkel" guide för hur man sätter upp en Linux-server för kandidatprojektet i kursen TDDD82. Denna kurs går under vårterminen för civilingenjörer inom IT på LiUs universitet.
+
 Servrarna givna av IDA (2018) kör operativsystemet [Debian 8](https://en.wikipedia.org/wiki/Debian).
 
 Kontakta handledare om `sudo` inte är installerat (har hänt).
+
+## Innehåll
+* [Login och användare](#login-och-användare)
+* [En webmasters snabbguide](#en-webmasters-snabbguide)
+  * [Webbserver - nginx](#webbserver---nginx)
+  * [Köra program - uWSGI](#köra-program---uwsgi)
+* [Server setup - fixa själva servern](#server-setup---fixa-själva-servern)
+  * [Updatera filer på server](#updatera-filer-på-server)
+  * [Hanetera databasen](#hanetera-databasen)
+* [Advanced shit](#advanced-shit)
+* [Rekommendationer (aka de vi gjorde för vårt projekt)](#rekommendationer-aka-de-vi-gjorde-för-vårt-projekt)
+  * [Backend](#backend)
+  * [Frontend](#frontend)
+  * [Testing](#testing)
 
 # Login och användare
 Logga in på servern med:
@@ -71,7 +87,7 @@ sudo apt install virtualenv python3 uwsgi uwsgi-emperor uwsgi-plugins-all nginx 
 sudo apt install certbot -t jessie-backports -y
 
 # Klona erat backend repo
-sudo git clone https://git..com/...git  /srv/tddd82
+sudo git clone https://git...com/...git  /srv/tddd82
 cd /srv/tddd82
 
 # Om ni använder en virtuell miljö för python
@@ -132,11 +148,11 @@ sudo git pull
 sudo service uwsgi.emperor restart
 ```
 
-Kolla databasen med:
+## Hanetera databasen
+Logga in i mysql-databasen (måste göra på någon av skolans nätverk pga säkerhet) med
 ```bash
 mysql -h db-und.ida.liu.se -u itkand_20XX_X_X -pitkand_20XX_X_X_XXXX itkand_20XX_X_X  
 ```
-
 
 # Advanced shit
 
@@ -146,12 +162,18 @@ mysql -h db-und.ida.liu.se -u itkand_20XX_X_X -pitkand_20XX_X_X_XXXX itkand_20XX
 * lokal utveckling mot skolans databas
 
 
-# Rekomendationer (aka de vi gjorde för vårt projekt)
+# Rekommendationer (aka de vi gjorde för vårt projekt)
+
+## Backend
 * [Flask](http://flask.pocoo.org/) - lättaste sättet att göra backenden på
 * [Flask-RESTful](https://flask-restful.readthedocs.io/en/latest/index.html) - ett till och med lättare sätt att göra backenden på
 * [PyMySQL](http://pymysql.readthedocs.io/en/latest/user/examples.html) - helt ok databas-driver för MySQL, lite få exempel kanske
-* [Advanced REST client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo) - enkel klient för att göra alla möjliga typer av requests
+
+## Frontend
 * [Volley](https://developer.android.com/training/volley/index.html) - request-bibliotek för android
 * [Java 8](https://developer.android.com/studio/write/java8-support.html) - mycket skönare syntax för Java/Android, funkar för alla API nivåer
 * [Singleton pattern](https://www.javaworld.com/article/2073352/core-java/simply-singleton.html) (glorifierad global varaibel) - använd för klasser som bara behöver instansieras en gång
 * [Factory pattern](https://www.tutorialspoint.com/design_pattern/factory_pattern.htm) - för att skapa mer avancerade object (t.ex. olika typer markörer). Om man inte gillar factories kan man istället använda [builder pattern](https://jlordiales.me/2012/12/13/the-builder-pattern-in-practice/)
+
+## Testing
+* [Advanced REST client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo) - enkel klient för att göra alla möjliga typer av requests
