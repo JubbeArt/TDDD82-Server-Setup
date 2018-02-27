@@ -2,9 +2,9 @@
 
 Servrarna givna av IDA (2018) kör operativsystemet [Debian 8](https://en.wikipedia.org/wiki/Debian).
 
-Kontakta handledare om `sudo` inte är insallerat (har hänt).
+Kontakta handledare om `sudo` inte är installerat (har hänt).
 
-## Login och användare
+# Login och användare
 Logga in på servern med:
 ```bash
 ssh liuid@itkand-X-X.tddd82-20XX.ida.liu.se
@@ -20,9 +20,9 @@ Du kan göra detta för andra användare med (`ls /home` för att se alla använ
 ```bash
 sudo chsh -s /bin/bash liuid
 ```
-## En webmasters snabbguide
+# En webmasters snabbguide
 
-### Webbserver - nginx
+## Webbserver - nginx
 [nginx](https://en.wikipedia.org/wiki/Nginx) är själva webbservern och är det som hanterar inkommande requests till servern. I en config-fil för din sida säger man vad som ska hända när användaren når en viss url, till exempel 'skicka all requests till den här python-appen'. Detta kommer också hantera certifikat för HTTPS.
 
 Config-filer som nginx automatiskt använder ligger i mappen:
@@ -43,7 +43,7 @@ sudo cat /var/log/nginx/access.log
 sudo cat /var/log/nginx/error.log
 ```
 
-### Köra program - uWSGI
+## Köra program - uWSGI
 [uWSGI](https://en.wikipedia.org/wiki/UWSGI) användas för att kommunicera mellan en webbapplikation och en webbserver. Till exempel för att få en python app att korrekt hantera requests och skicka tillbaka data till klienter. Från början användes det bara för python-applikationer men har på senare tid börjat stödja andra språk (e.g. php, ruby, perl, Golang).
 
 Kan vara lite svårt att sätta upp ibland beroende på språk och ramverk. Flask och Django för python brukar oftast fungera på första försöket.
@@ -57,7 +57,7 @@ sudo cat /srv/tddd82/uwsgi.log
 sudo tail -s 100 /srv/tddd82/uwsgi.log
 ``` 
 
-## Server setup - fixa själva servern
+# Server setup - fixa själva servern
 Mycket copy paste.
 ```bash
 # Gör det möjgligt att ladda ner program för att få HTTPS
@@ -66,7 +66,7 @@ echo 'deb http://ftp.debian.org/debian jessie-backports main' | sudo tee /etc/ap
 # Uppdatera programlistan
 sudo apt-get update
 
-# Installera allt nödvändigt
+# Installera allt nödvändigt (och lite till)
 sudo apt install virtualenv python3 uwsgi uwsgi-emperor uwsgi-plugins-all nginx -y
 sudo apt install certbot -t jessie-backports -y
 
@@ -107,7 +107,7 @@ sudo cp nginx-default /etc/nginx/sites-enabled/default
 sudo systemctl reload nginx
 
 # Fixa HTTPS (ändra domänen till din egen)
-sudo certbot certonly --webroot -w /srv/tddd82 -d itkand-X-X.tddd82-20XX.ida.liu.se
+sudo certbot certonly --webroot /srv/tddd82 -d itkand-X-X.tddd82-20XX.ida.liu.se
 
 # Notera raderna "Generating key (2048 bits): ..." och
 # "Congratulations! Your certificate and chain have been saved at ..."
@@ -132,10 +132,26 @@ sudo git pull
 sudo service uwsgi.emperor restart
 ```
 
+Kolla databasen med:
+```bash
+mysql -h db-und.ida.liu.se -u itkand_20XX_X_X -pitkand_20XX_X_X_XXXX itkand_20XX_X_X  
+```
 
-## Advanced shit
 
-### TODO
+# Advanced shit
+
+## TODO
 * webhooks
 * login utan lösenord
 * lokal utveckling mot skolans databas
+
+
+# Rekomendationer (aka de vi gjorde för vårt projekt)
+* [Flask](http://flask.pocoo.org/) - lättaste sättet att göra backenden på
+* [Flask-RESTful](https://flask-restful.readthedocs.io/en/latest/index.html) - ett till och med lättare sätt att göra backenden på
+* [PyMySQL](http://pymysql.readthedocs.io/en/latest/user/examples.html) - helt ok databas-driver för MySQL, lite få exempel kanske
+* [Advanced REST client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo) - enkel klient för att göra alla möjliga typer av requests
+* [Volley](https://developer.android.com/training/volley/index.html) - request-bibliotek för android
+* [Java 8](https://developer.android.com/studio/write/java8-support.html) - mycket skönare syntax för Java/Android, funkar för alla API nivåer
+* [Singleton pattern](https://www.javaworld.com/article/2073352/core-java/simply-singleton.html) (glorifierad global varaibel) - använd för klasser som bara behöver instansieras en gång
+* [Factory pattern](https://www.tutorialspoint.com/design_pattern/factory_pattern.htm) - för att skapa mer avancerade object (t.ex. olika typer markörer). Om man inte gillar factories kan man istället använda [builder pattern](https://jlordiales.me/2012/12/13/the-builder-pattern-in-practice/)
