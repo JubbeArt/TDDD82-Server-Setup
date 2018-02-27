@@ -6,18 +6,18 @@ Kontakta handledare om `sudo` inte är insallerat (har hänt).
 
 ## Login och användare
 Logga in på servern med:
-```
+```bash
 ssh liuid@itkand-X-X.tddd82-20XX.ida.liu.se
 ```
 
-Vid först inlogg kan det verka som terminalen är trasig (e.g. piltangener fungerar inte), detta är för att IDA skapar sina använda på ett väldigt primitivt (läs retarded) sätt. "Det är en väldigt barskrapad config, men det gör också att ni kan anpassa per grupp.". Fixa detta genom att ändra din login shell med
-```
+Vid först inlogg kan det verka som terminalen är trasig (e.g. piltangener fungerar inte), detta är för att IDA skapar sina använda på ett väldigt primitivt (läs retarded) sätt. "Det är en väldigt barskrapad config, men det gör också att ni kan anpassa per grupp". Fixa detta problem genom att ändra din login shell med
+```bash
 chsh -s /bin/bash
 ```
 Du behöver sedan logga ut (`exit`) och logga in igen för att se någon skillnad.
 
 Du kan göra detta för andra användare med (`ls /home` för att se alla användare)
-```
+```bash
 sudo chsh -s /bin/bash liuid
 ```
 ## En webmasters snabbguide
@@ -26,15 +26,15 @@ sudo chsh -s /bin/bash liuid
 [nginx](https://en.wikipedia.org/wiki/Nginx) är själva webbservern och är det som hanterar inkommande requests till servern. I en config-fil för din sida säger man vad som ska hända när användaren når en viss url, till exempel 'skicka all requests till den här python-appen'. Detta kommer också hantera certifikat för HTTPS.
 
 Config-filer som nginx automatiskt använder ligger i mappen:
-```
+```bash
 /etc/nginx/sites-enabled
 ```
 När ändringar görs av dessa filer måste man ladda om config-filerna manuellt med:
-```
+```bash
 sudo service nginx reload
 ```
 Debugging:
-```
+```bash
 # Testa config-filer
 sudo nginx -t
 # Kolla requests log
@@ -51,14 +51,15 @@ Kan vara lite svårt att sätta upp ibland beroende på språk och ramverk. Flas
 Se detailjer för språk/ramverk i deras [dokumentation](http://uwsgi-docs.readthedocs.io/en/latest/). Det brukar finnas en guide för de mesta.
 
 Kolla logfilen för att debugga din app, i min exempelfil så görs detta med
-```
+```bash
 sudo cat /srv/tddd82/uwsgi.log
 # Alternativt för att få de sista raderna
 sudo tail -s 100 /srv/tddd82/uwsgi.log
 ``` 
 
-## Server setup
-```
+## Server setup - fixa själva servern
+Mycket copy paste.
+```bash
 # Gör det möjgligt att ladda ner program för att få HTTPS
 echo 'deb http://ftp.debian.org/debian jessie-backports main' | sudo tee /etc/apt/sources.list.d/backports.list
 
@@ -108,8 +109,8 @@ sudo systemctl reload nginx
 # Fixa HTTPS (ändra domänen till din egen)
 sudo certbot certonly --webroot -w /srv/tddd82 -d itkand-X-X.tddd82-20XX.ida.liu.se
 
-# Notera raderna "Generating key (2048 bits)" och
-# "Congratulations! Your certificate and chain have been saved at"
+# Notera raderna "Generating key (2048 bits): ..." och
+# "Congratulations! Your certificate and chain have been saved at ..."
 
 # Du måste lägga till dessa två filer i nginx-configen
 sudo nano /etc/nginx/sites-enabled/default
@@ -125,7 +126,7 @@ sudo service nginx reload
 
 ```
 ## Updatera filer på server
-```
+```bash
 cd /srv/tddd82
 sudo git pull
 sudo service uwsgi.emperor restart
