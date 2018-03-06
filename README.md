@@ -128,7 +128,7 @@ sudo cp nginx-default /etc/nginx/sites-enabled/default
 sudo systemctl reload nginx
 
 # Fixa HTTPS (ändra domänen till din egen)
-sudo certbot certonly --webroot /srv/tddd82 -d itkand-X-X.tddd82-20XX.ida.liu.se
+sudo certbot certonly -w /srv/tddd82 -d itkand-X-X.tddd82-20XX.ida.liu.se
 
 # Notera raderna "Generating key (2048 bits): ..." och
 # "Congratulations! Your certificate and chain have been saved at ..."
