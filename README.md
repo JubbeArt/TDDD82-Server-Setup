@@ -3,6 +3,8 @@
 En "enkel" guide för hur man sätter upp en Linux-server för gruppprojektet i kursen TDDD82. Denna kurs går under vårterminen för trejde årets studenter för civilingenjörsutbildningen inom IT på LiUs universitet.
 
 Servrarna givna av IDA (2018) kör operativsystemet [Debian 8](https://en.wikipedia.org/wiki/Debian). 
+![Screenfetch](https://raw.githubusercontent.com/JubbeArt/TDDD82-Server-Setup/assets/screenfetch.png)
+
 Specs: 
 * Processor: Intel Xeon  E5-2620, 2.00 GHz 
 * 1GB RAM
@@ -133,7 +135,7 @@ sudo certbot certonly -w /srv/tddd82 -d itkand-X-X.tddd82-20XX.ida.liu.se
 # Notera raderna "Generating key (2048 bits): ..." och
 # "Congratulations! Your certificate and chain have been saved at ..."
 
-# Du måste lägga till dessa två filer i nginx-configen
+# Du måste länka till dessa två filer i nginx-configen
 sudo nano /etc/nginx/sites-enabled/default
 # Ta bort kommentarerna i andra server-blocket och se till att filvägarna är korrekt
 # Spara med ctrl-o och avsluta med ctrl-x
