@@ -3,6 +3,7 @@
 En "enkel" guide för hur man sätter upp en Linux-server för gruppprojektet i kursen TDDD82. Denna kurs går under vårterminen för trejde årets studenter för civilingenjörsutbildningen inom IT på LiUs universitet.
 
 Servrarna givna av IDA (2018) kör operativsystemet [Debian 8](https://en.wikipedia.org/wiki/Debian). 
+
 ![Screenfetch](https://raw.githubusercontent.com/JubbeArt/TDDD82-Server-Setup/assets/screenfetch.png)
 
 Specs: 
@@ -45,6 +46,8 @@ sudo chsh -s /bin/bash liuid
 # En webmasters snabbguide
 
 ## Webbserver - nginx
+![nginx](https://raw.githubusercontent.com/JubbeArt/TDDD82-Server-Setup/assets/nginx.png)
+
 [nginx](https://en.wikipedia.org/wiki/Nginx) är själva webbservern och är det som hanterar inkommande requests till servern. I en config-fil för din sida säger man vad som ska hända när användaren når en viss url, till exempel 'skicka all requests till den här python-appen'. Detta kommer också hantera certifikat för HTTPS.
 
 Config-filer som nginx automatiskt använder ligger i mappen:
@@ -66,7 +69,11 @@ sudo cat /var/log/nginx/error.log
 ```
 
 ## Köra program - uWSGI
+![uWSGI](https://raw.githubusercontent.com/JubbeArt/TDDD82-Server-Setup/assets/uwsgi.png)
+
 [uWSGI](https://en.wikipedia.org/wiki/UWSGI) användas för att kommunicera mellan en webbapplikation och en webbserver. Till exempel för att få en python app att kunna hantera requests och skicka tillbaka data till klienten. Från början användes det bara för python-applikationer men har på senare tid börjat stödja andra språk (e.g. php, ruby, perl, Golang).
+
+![basicflow](https://raw.githubusercontent.com/JubbeArt/TDDD82-Server-Setup/assets/basicflow.png)
 
 Kan vara lite svårt att sätta upp ibland beroende på språk och ramverk. Flask och Django för python brukar oftast fungera på första försöket.
 
