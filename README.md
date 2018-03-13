@@ -37,11 +37,11 @@ Vid först inlogg kan det verka som terminalen är trasig (e.g. piltangener fung
 ```bash
 chsh -s /bin/bash
 ```
-Du behöver sedan logga ut (`exit`) och logga in igen för att se någon skillnad.
+Du behöver sedan logga ut (`exit`) och logga in igen för att se någon skillnad. Du kan för tillfälligt skriva `bash` för att aktivera den nya shellen.
 
 Du kan göra detta för andra användare med (`ls /home` för att se alla användare)
 ```bash
-sudo chsh -s /bin/bash liuid
+sudo chsh -s /bin/bash liuID123
 ```
 # En webmasters snabbguide
 
@@ -89,17 +89,17 @@ sudo tail -s 100 /srv/tddd82/uwsgi.log
 # Server setup - fixa själva servern
 Mycket copy paste.
 ```bash
-# Gör det möjgligt att ladda ner program för att få HTTPS
+# Gör det möjgligt att ladda ner ett program för att få HTTPS-certifikat
 echo 'deb http://ftp.debian.org/debian jessie-backports main' | sudo tee /etc/apt/sources.list.d/backports.list
 
 # Uppdatera programlistan
 sudo apt-get update
 
 # Installera allt nödvändigt (och lite till)
-sudo apt install virtualenv python3 uwsgi uwsgi-emperor uwsgi-plugins-all nginx -y
+sudo apt install git virtualenv python3 uwsgi uwsgi-emperor uwsgi-plugins-all nginx -y
 sudo apt install certbot -t jessie-backports -y
 
-# Klona erat backend repo
+# Klona erat backend repo till mappen '/srv/tddd82'
 sudo git clone https://git...com/...git  /srv/tddd82
 cd /srv/tddd82
 
@@ -112,9 +112,9 @@ deactivate
 # Fixa rättigheter i eran server-mapp
 sudo chown -R www-data:www-data /srv/tddd82
 
-# Hämta detta repo, spelar ingen roll vart den sparas
-cd ~
-git clone https://github.com/JubbeArt/tddd82-server-setup .
+# Hämta detta repo, spelar ingen roll vart den sparas (sparas nu i den hem-mapp)
+git clone https://github.com/JubbeArt/tddd82-server-setup ~/tddd82-server-setup
+cd ~/tddd82-server-setup
 
 # Här vill ni ändra i uwsgi-config filen efter behov
 # Exempelfilen är designad för att fungera för python-appar skrivet med Flask 
@@ -122,7 +122,7 @@ git clone https://github.com/JubbeArt/tddd82-server-setup .
 # och 'app' som huvud-python-object 
 sudo cp uwsgi-flask.ini /etc/uwsgi-emperor/vassals
 
-# Stoppa default programmet som kör uwsgi (den suger)
+# Stoppa default programmet som kör uwsgi (den är depricated)
 sudo systemctl stop uwsgi-emperor
 sudo systemctl disable uwsgi-emperor
 
@@ -137,14 +137,14 @@ sudo cp nginx-default /etc/nginx/sites-enabled/default
 sudo systemctl reload nginx
 
 # Fixa HTTPS (ändra domänen till din egen)
-sudo certbot certonly -w /srv/tddd82 -d itkand-X-X.tddd82-20XX.ida.liu.se
+sudo certbot certonly --webroot -w /srv/tddd82 -d itkand-X-X.tddd82-20XX.ida.liu.se
 
 # Notera raderna "Generating key (2048 bits): ..." och
 # "Congratulations! Your certificate and chain have been saved at ..."
 
 # Du måste länka till dessa två filer i nginx-configen
 sudo nano /etc/nginx/sites-enabled/default
-# Ta bort kommentarerna i andra server-blocket och se till att filvägarna är korrekt
+# Ta bort kommentarerna (raderna med #) i det andra server-blocket och se till att filvägarna är korrekt
 # Spara med ctrl-o och avsluta med ctrl-x
 # Testa nginx med
 sudo nginx -t
