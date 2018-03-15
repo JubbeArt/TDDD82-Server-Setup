@@ -96,7 +96,7 @@ echo 'deb http://ftp.debian.org/debian jessie-backports main' | sudo tee /etc/ap
 sudo apt-get update
 
 # Installera allt nödvändigt (och lite till)
-sudo apt install git virtualenv python3 uwsgi uwsgi-emperor uwsgi-plugins-all nginx -y
+sudo apt install git virtualenv python3 uwsgi uwsgi-emperor uwsgi-plugins-all nginx mysql-client -y
 sudo apt install certbot -t jessie-backports -y
 
 # Klona erat backend repo till mappen '/srv/tddd82'
