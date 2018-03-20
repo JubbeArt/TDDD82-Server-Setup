@@ -168,6 +168,18 @@ Logga in i mysql-databasen (måste göra på någon av skolans nätverk pga säk
 mysql -h db-und.ida.liu.se -u itkand_20XX_X_X -pitkand_20XX_X_X_XXXX itkand_20XX_X_X  
 ```
 
+## Databasreplikering
+IDAs databasserver stödjer inte MYSQLs inbyggda replikering och de har sagt att de inte vill sätta på denna funktion. Istället så gav de lösningen att man skulle sätta upp en egen mysql-server istället för att använda den givna. Inte optimalt enligt mig men man ska inte förvänta sig att de facto lösningar som finns inom databranchen faktiskt ska fungera på institutionen för datavetenskap.  
+```bash
+sudo apt-get install mysql-server
+# Frivilllig, inte nödvändigt för detta projekt
+#mysql_secure_installation
+mysql -u root -proot
+CREATE DATABASE itkand_20XX_X_X;
+USE itkand_20XX_X_X;
+```
+Kopplingen mot detta databas sker nu mot localhost (127.0.0.1) port 3306
+
 # Advanced shit
 
 ## TODO
