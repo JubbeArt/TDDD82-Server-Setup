@@ -15,7 +15,7 @@ Kontakta handledare om `sudo` inte är installerat (har hänt).
 
 ## Innehåll
 * [Login och användare](#login-och-användare)
-* [En webmasters snabbguide](#en-webmasters-snabbguide)
+* [En webmasters guide till galaxen](#en-webmasters-guide-till-galaxen)
   * [Webbserver - nginx](#webbserver---nginx)
   * [Köra program - uWSGI](#köra-program---uwsgi)
 * [Server setup - fixa själva servern](#server-setup---fixa-själva-servern)
@@ -43,7 +43,7 @@ Du kan göra detta för andra användare med (`ls /home` för att se alla använ
 ```bash
 sudo chsh -s /bin/bash liuID123
 ```
-# En webmasters snabbguide
+# En webmasters guide till galaxen
 
 ## Webbserver - nginx
 ![nginx](https://raw.githubusercontent.com/JubbeArt/TDDD82-Server-Setup/assets/nginx.png)
@@ -179,7 +179,7 @@ mysql -u root -proot
 CREATE DATABASE itkand_20XX_X_X;
 exit
 ```
-Kopplingen mot detta databas sker nu mot localhost (127.0.0.1) port 3306 av användare root med lösenord root.
+Kopplingen mot detta databas sker nu mot localhost (127.0.0.1) på port 3306 för användaren root med lösenordet root.
 
 En guide för resten finns [här](https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql) ([archive-länk](https://web.archive.org/web/20161016000055/https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql))
 
