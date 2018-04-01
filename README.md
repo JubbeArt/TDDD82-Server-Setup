@@ -159,7 +159,7 @@ sudo service nginx reload
 ```bash
 cd /srv/tddd82
 sudo git pull
-sudo service uwsgi.emperor restart
+sudo service emperor.uwsgi restart
 ```
 
 ## Hanetera databasen
